@@ -8,25 +8,44 @@ import AllProductsPage from "./pages/AllProductsPage"
 import ProductDetailPage from './pages/ProductDetailPage'
 import CartPage from './pages/CartPage'
 import { useEffect, useState } from 'react'
+import UserContext from './contexts/UserContext'
 import { api } from './utilities'
-import Layout from './components/Layout'
- 
+
+
 function App() {
+  const [user, setUser] = useState(null)
+
+  const checkUser = async() => {
+    let token = localStorage.getItem('token')
+    if (token){
+      console.log(token)
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`
+      let response = await api.get('/userinfo/')
+      console.log(response)
+      setUser(response.data.email)
+    }
+  }
+
+  useEffect(() => {
+    checkUser()
+  }, [])
+
+
   return (
     <>
-      <Router>
-        <NavBar/>
-        <Routes>
-          <Route path='/' element={<Layout/>}>
-          <Route index element={<HomePage/>}></Route>
-          <Route path='/login' element={<LoginPage/>}></Route>
-          <Route path='/register' element={<RegistrationPage/>}></Route>
-          <Route path='/products' element={<AllProductsPage/>}></Route>
-          <Route path='/cart' element={<CartPage/>}></Route>
-          <Route path='/products/:productId' element={<ProductDetailPage/>}></Route>
-          </Route>
-        </Routes>
-      </Router>
+      <UserContext.Provider value={[user, setUser]}>
+        <Router>
+          <NavBar/>
+          <Routes>
+            <Route path='/' element={<HomePage/>}></Route>
+            <Route path='/login' element={<LoginPage/>}></Route>
+            <Route path='/register' element={<RegistrationPage/>}></Route>
+            <Route path='/products' element={<AllProductsPage/>}></Route>
+            <Route path='/cart' element={<CartPage/>}></Route>
+            <Route path='/products/:productId' element={<ProductDetailPage/>}></Route>
+          </Routes>
+        </Router>
+      </UserContext.Provider>
     </>
   )
 }

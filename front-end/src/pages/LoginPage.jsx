@@ -1,15 +1,16 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import ButtonComponent from "../components/ButtonComponent"
 import { useNavigate } from "react-router-dom"
 import { useOutletContext } from "react-router-dom";
 import { api } from "../utilities";
 import { Link } from "react-router-dom"
+import UserContext from "../contexts/UserContext";
 
 function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
-  const {user, setUser} = useOutletContext()
+  const [user, setUser] = useContext(UserContext)
 
   const login = async(e) => {
     e.preventDefault()
