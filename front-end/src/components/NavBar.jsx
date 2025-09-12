@@ -1,6 +1,10 @@
+import { useContext } from "react"
 import { Link } from "react-router-dom"
+import UserContext from "../contexts/UserContext"
+import { api } from "../utilities"
 
-function NavBar() {
+function NavBar( {user}) {
+
  return (
   <>
   <div id='nav-bar' className="flex flex-row justify-between">
@@ -8,8 +12,14 @@ function NavBar() {
     <nav className="flex justify-evenly w-1/2">
      <Link to='/'>Home</Link>
      <Link to='/products'>Shop</Link>
-     <Link to='/login'>Account</Link>
-     <Link to='/cart'>Cart</Link>
+     {user ?
+     <>
+      <div>Logout</div>
+      <Link to='/cart'>Cart</Link>
+     </>
+     :
+      <Link to='/login'>Login/Register</Link>
+     }
     </nav>
   </div>
   </>

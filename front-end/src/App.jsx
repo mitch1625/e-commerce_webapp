@@ -35,7 +35,7 @@ function App() {
     <>
       <UserContext.Provider value={[user, setUser]}>
         <Router>
-          <NavBar/>
+          <NavBar user={user}/>
           <Routes>
             <Route path='/' element={<HomePage/>}></Route>
             <Route path='/login' element={<LoginPage/>}></Route>
