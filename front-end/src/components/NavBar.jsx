@@ -1,9 +1,24 @@
 import { useContext } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import UserContext from "../contexts/UserContext"
-import { api } from "../utilities"
+import { api, setAuthToken } from "../utilities"
 
 function NavBar( {user}) {
+  const navigate = useNavigate()
+  const { setUser } = useContext(UserContext)
+
+  const handleLogout = async() => {
+    try {
+      await api.delete("/logout/")
+      localStorage.removeItem('token');
+      setUser(null)
+      setAuthToken(null)
+      navigate('/')
+    } catch (err) {
+      console.error("Logout failed", err)
+    }
+    navigate("/")
+  }
 
  return (
   <>
@@ -14,7 +29,7 @@ function NavBar( {user}) {
      <Link to='/products'>Shop</Link>
      {user ?
      <>
-      <div>Logout</div>
+      <div onClick={handleLogout}>Logout</div>
       <Link to='/cart'>Cart</Link>
      </>
      :
