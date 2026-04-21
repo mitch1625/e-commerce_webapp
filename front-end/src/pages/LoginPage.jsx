@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import ButtonComponent from "../components/ButtonComponent"
 import { useNavigate } from "react-router-dom"
 import { useOutletContext } from "react-router-dom";
-import { api } from "../utilities";
+import { api, setAuthToken } from "../utilities";
 import { Link } from "react-router-dom"
 import UserContext from "../contexts/UserContext";
 
@@ -19,9 +19,13 @@ function LoginPage() {
         email:email,
         password:password
       })
-      setUser(response.data.user_id)
-      localStorage.setItem('token', response.data.token);
-      api.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`
+
+      const token = response.data.token
+
+      localStorage.setItem("token", token)
+      setAuthToken(token)
+
+    setUser(response.data.user_id)
       navigate('/')
     } catch (err) {
         console.log(err.response.data)
