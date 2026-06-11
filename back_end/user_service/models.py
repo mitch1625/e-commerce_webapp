@@ -1,6 +1,8 @@
 from sqlalchemy import Column, ForeignKey, String, Integer
-from database import Base
+# from database import Base
+from sqlalchemy.ext.declarative import declarative_base
 
+Base = declarative_base()
 class User(Base):
   __tablename__ = 'user'
   id = Column(Integer, primary_key=True, index=True)

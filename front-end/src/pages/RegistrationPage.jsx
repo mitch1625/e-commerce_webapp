@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { data, Link, useOutletContext } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { api } from "../utilities"
+import UserContext from "../contexts/UserContext"
 
 function RegistrationPage() {
   const [email, setEmail] = useState("")
@@ -9,7 +10,7 @@ function RegistrationPage() {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const navigate = useNavigate()
-  const {user, setUser} = useOutletContext()
+  const [user, setUser] = useContext(UserContext)
   
   const createUser = async(e) => {
     e.preventDefault()
