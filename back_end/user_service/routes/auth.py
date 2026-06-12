@@ -1,8 +1,5 @@
-from datetime import datetime, timezone, timedelta
-from pydantic import BaseModel
-from fastapi import FastAPI, HTTPException, Depends, status, Request, APIRouter
-from typing import List, Annotated
-# import models
+from fastapi import HTTPException, Depends, status, APIRouter
+from typing import Annotated
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import Session
 from security import jwt_utils
@@ -69,6 +66,7 @@ def login(user: auth.LoginRequest, db:db_dependency):
   return {
     "user_id": user.email,
     "token": token,
+    "expires_in": expires_in
   }
 
 @router.get("/userinfo/")

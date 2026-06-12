@@ -1,7 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from functools import lru_cache
-from pydantic import Field
-import os
+
 class Settings(BaseSettings):
     jwt_key: str
     algorithm: str
@@ -13,6 +12,7 @@ class Settings(BaseSettings):
         env_file_encoding = "utf-8",
         extra="allow"
         )
+    
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
