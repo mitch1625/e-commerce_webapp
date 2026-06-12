@@ -9,7 +9,9 @@ from security import jwt_utils
 from user_service.database import SessionLocal
 from user_service.schemas import auth
 from user_service import models
-
+from user_service.database import engine
+  
+models.Base.metadata.create_all(bind=engine)
 router = APIRouter()
 def get_db():
   db = SessionLocal()
@@ -23,11 +25,11 @@ db_dependency = Annotated[Session, Depends(get_db)]
 @router.post('/signup/', status_code=status.HTTP_201_CREATED)
 async def create_user(
   user: auth.RegisterRequest, 
-  db: Session = Depends(get_db)
+  db: db_dependency
   ) -> dict:
 
   print('Registering Account')
-  print(auth.RegisterRequest)
+  # print(auth.RegisterRequest)
   existing_user = db.query(models.User).filter(models.User.email == user.email).first()
   if existing_user:
     raise HTTPException(status_code=400, detail='Email already registered to account')
@@ -53,8 +55,12 @@ async def create_user(
 @router.post('/login/')
 def login(user: auth.LoginRequest, db:db_dependency, status_code=status.HTTP_201_CREATED):
   existing_user = db.query(models.User).filter(models.User.email == user.email).first()
-  print('Attempting to login...')
-  if not user or not check_password_hash(existing_user.password, user.password):
+  if existing_user is None:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
+  if not check_password_hash(existing_user.password, user.password):
     raise HTTPException(status_code=401, detail='Invalid email or password')
 
   # token = jwt.encode({
@@ -63,7 +69,7 @@ def login(user: auth.LoginRequest, db:db_dependency, status_code=status.HTTP_201
   #           JWT_KEY,
   #           algorithm='HS256')
   token, expires_in = jwt_utils.create_jwt(subject=str(user.email))
-  print(f'User ${user.email} logged in')
+  print(f'User {user.email} logged in')
   return {
     "user_id": user.email,
     "token": token,
