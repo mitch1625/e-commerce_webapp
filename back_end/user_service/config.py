@@ -6,8 +6,6 @@ class Settings(BaseSettings):
     jwt_key: str
     algorithm: str
     token_expire: int
-    # db_name: str
-    # db_user: str
 
     db_password: str
     model_config = SettingsConfigDict(

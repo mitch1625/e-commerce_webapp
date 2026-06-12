@@ -41,19 +41,20 @@ async def create_user(
     last_name = user.last_name,
     password = hashed_password
   )
-  token, expires_in = jwt_utils.create_jwt(subject=str(user.email))
  
   db.add(new_user)
   db.commit()
   db.refresh(new_user)
 
+  token, expires_in = jwt_utils.create_jwt(subject=str(user.email))
   return {
     "user_id" : user.email,
-    "token" : token
+    "token" : token,
+    "expires_in": expires_in
   }
 
-@router.post('/login/')
-def login(user: auth.LoginRequest, db:db_dependency, status_code=status.HTTP_201_CREATED):
+@router.post('/login/', status_code=status.HTTP_200_OK)
+def login(user: auth.LoginRequest, db:db_dependency):
   existing_user = db.query(models.User).filter(models.User.email == user.email).first()
   if existing_user is None:
         raise HTTPException(
@@ -63,11 +64,6 @@ def login(user: auth.LoginRequest, db:db_dependency, status_code=status.HTTP_201
   if not check_password_hash(existing_user.password, user.password):
     raise HTTPException(status_code=401, detail='Invalid email or password')
 
-  # token = jwt.encode({
-  #           'sub': user.email, 
-  #           'exp': datetime.now(timezone.utc) + timedelta(hours=1)}, 
-  #           JWT_KEY,
-  #           algorithm='HS256')
   token, expires_in = jwt_utils.create_jwt(subject=str(user.email))
   print(f'User {user.email} logged in')
   return {

@@ -10,4 +10,4 @@ class User(Base):
   email = Column(String(100), unique=True, index=True, nullable=False)
   first_name = Column(String(50), unique=False, nullable=False)
   last_name = Column(String(50), unique=False, nullable=False)
-  password = Column(String, nullable=False)
+  password = Column(String(50), nullable=False)
