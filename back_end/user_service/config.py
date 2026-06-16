@@ -2,9 +2,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from functools import lru_cache
 
 class Settings(BaseSettings):
-    jwt_key: str
-    algorithm: str
-    token_expire: int
 
     db_password: str
     model_config = SettingsConfigDict(
