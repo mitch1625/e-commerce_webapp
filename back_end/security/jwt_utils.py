@@ -1,7 +1,7 @@
 import jwt
 from datetime import datetime, timedelta, timezone
 from jose import JWTError, jwt
-from config import get_settings
+from security.config import get_settings
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import HTTPException, status, Depends
 
