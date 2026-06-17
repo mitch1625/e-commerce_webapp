@@ -6,14 +6,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-USERNAME = os.getenv('USERNAME')
-PASSWORD = os.getenv('PASSWORD')
-CART_DB = os.getenv('CART_DB')
-URL_DATABASE = f'postgresql+psycopg://{USERNAME}:{PASSWORD}@localhost/{CART_DB}'
+USERNAME = os.getenv('DB_USER')
+PASSWORD = os.getenv('DB_PASSWORD')
+URL_DATABASE = f'postgresql+psycopg://{USERNAME}:{PASSWORD}@localhost/product_db'
  
- 
+
 engine = create_engine(URL_DATABASE)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+

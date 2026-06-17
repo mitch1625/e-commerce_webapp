@@ -1,5 +1,9 @@
 from sqlalchemy import Column, ForeignKey, String, Integer, JSON
-from database import Base
+from sqlalchemy import Column, String, Integer
+from sqlalchemy.orm import DeclarativeBase
+
+class Base(DeclarativeBase):
+  pass
 
 class Products(Base):
   __tablename__ = 'products'

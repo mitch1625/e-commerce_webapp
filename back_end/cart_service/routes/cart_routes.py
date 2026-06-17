@@ -1,29 +1,15 @@
-from fastapi import FastAPI, HTTPException, Depends, status, Request, Header, Response
-from database import engine, SessionLocal, Base
-from models import *
-import models
-from sqlalchemy.orm import Session
-from werkzeug.security import generate_password_hash, check_password_hash
-import jwt
-from datetime import datetime, timezone, timedelta
-from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
-import os
-from schemas import *
-import dotenv
+from fastapi import HTTPException, Depends, status, APIRouter
 from fastapi.responses import JSONResponse
-
-app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-JWT_KEY = os.getenv('JWT_KEY')
+from cart_service.schemas.schemas import CartItemRequest, CartItemResponse
+from sqlalchemy.orm import Session
+from cart_service.models import Cart, CartItem
+from cart_service.database import engine, SessionLocal
+from security.jwt_utils import get_current_user, verify_token
+from cart_service import models
+from typing import Annotated
 
 models.Base.metadata.create_all(bind=engine)
+router = APIRouter()
 
 def get_db():
     db = SessionLocal()
@@ -32,18 +18,11 @@ def get_db():
     finally:
         db.close()
 
+db_dependency = Annotated[Session, Depends(get_db)]
 
-def get_current_user(authorization: str = Header(...)):
-    if not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail='Invalid auth header')
-    token = authorization.split(" ")[1]
-    try:
-        content = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
-        return content['sub']
-    except jwt.PyJWTError:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
-def get_or_create_cart(db: Session, user_id: str):
+def get_or_create_cart(db: db_dependency, 
+                       user_id: str):
+    print("fetching cart")
     cart = db.query(Cart).filter(Cart.user_id == user_id).first()
     if not cart:
         cart = Cart(user_id=user_id)
@@ -52,13 +31,13 @@ def get_or_create_cart(db: Session, user_id: str):
         db.refresh(cart)
     return cart
 
-@app.post('/cart/add/')
+@router.post('/cart/add/')
 def add_to_cart(item: CartItemRequest, 
-                db: Session = Depends(get_db), 
-                user_id: str = Depends(get_current_user), 
+                db: db_dependency, 
+                user_id: str = Depends(verify_token), 
                 status_code=status.HTTP_201_CREATED):
     print('Adding item to cart...')
-    cart = get_or_create_cart(db, user_id)
+    cart = get_or_create_cart(db, user_id['sub'])
     cart_item = db.query(CartItem).filter(
         CartItem.cart_id == cart.id,
         CartItem.product_id == item.product_id
@@ -83,8 +62,9 @@ def add_to_cart(item: CartItemRequest,
         status_code=status.HTTP_201_CREATED
     )
 
-@app.get('/cart/')
-def get_cart(db: Session = Depends(get_db), user_id: str = Depends(get_current_user)):
+@router.get('/cart/')
+def get_cart(db: db_dependency, 
+             user_id: str = Depends(get_current_user)):
     cart = get_or_create_cart(db, user_id)
     print(f'Getting cart for {cart.user_id}')
     if not cart:
@@ -107,9 +87,9 @@ def get_cart(db: Session = Depends(get_db), user_id: str = Depends(get_current_u
         "items": items_response,
     }
 
-@app.put('/cart/remove/{item_id}')
+@router.put('/cart/remove/{item_id}')
 def remove_from_cart(item_id: int, 
-                     db: Session = Depends(get_db), 
+                     db: db_dependency, 
                      user_id: str = Depends(get_current_user)):
 
     cart = get_or_create_cart(db, user_id)
