@@ -7,9 +7,10 @@ from user_service.database import SessionLocal
 from user_service.schemas import auth
 from user_service import models
 from user_service.database import engine
-  
+
 models.Base.metadata.create_all(bind=engine)
 router = APIRouter()
+
 def get_db():
   db = SessionLocal()
   try:

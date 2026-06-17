@@ -20,9 +20,6 @@ class CartResponse(BaseModel):
     user_id: str
     items: List[CartItemResponse]
 
-    class Config:
-        orm_mode = True
-
 class CartItemRequest(BaseModel):
     product_id: int
     quantity: int
