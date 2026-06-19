@@ -7,7 +7,7 @@ load_dotenv()
 USERNAME = os.getenv('DB_USER')
 PASSWORD = os.getenv('DB_PASSWORD')
 # DB_NAME = os.getenv('USR_DB_NAME')
-URL_DATABASE = f'postgresql+psycopg://{USERNAME}:{PASSWORD}@localhost/user_db'
+URL_DATABASE = f'postgresql+psycopg://{USERNAME}:{PASSWORD}@user_db:5432/user_db'
 
 
 engine = create_engine(URL_DATABASE)
