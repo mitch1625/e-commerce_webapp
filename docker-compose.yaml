@@ -1,0 +1,100 @@
+version: "3"
+
+services:
+  dev:
+    build:
+      context: ./front_end
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /front_end/src
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./package.json
+          target: /front_end/package.json
+          
+  user_db:
+    image: postgres:16
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password 
+      POSTGRES_DB: user_db 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U username -d user_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  user_service:
+    build:
+      context: ./back_end
+      dockerfile: user_service/Dockerfile
+    depends_on:
+      user_db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=user_db
+      - DB_USER=username
+      - DB_PASSWORD=password
+    ports:
+      - "8000:8000"
+  products_db:
+    image: postgres:16
+    ports:
+     - 5434:5432
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password 
+      POSTGRES_DB: products_db 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U username -d products_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  products_service:
+    build:
+      context: ./back_end
+      dockerfile: products_service/Dockerfile
+    depends_on:
+      products_db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=products_db
+      - DB_USER=username
+      - DB_PASSWORD=password
+    ports:
+      - "8001:8001"
+  cart_db:
+    image: postgres:16
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cart_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U username -d cart_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  cart_service:
+    build:
+      context: ./back_end
+      dockerfile: cart_service/Dockerfile
+    depends_on:
+      cart_db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=cart_db 
+      - DB_USER=username
+      - DB_PASSWORD=password
+    ports:
+      - "8002:8002"
+  
