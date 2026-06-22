@@ -10,12 +10,12 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./src
+          path: ./front_end/src
           target: /front_end/src
           ignore:
             - node_modules/
         - action: rebuild
-          path: ./package.json
+          path: ./front_end/package.json
           target: /front_end/package.json
           
   user_db:
