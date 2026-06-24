@@ -8,5 +8,5 @@ RUN pip install --no-cache-dir --upgrade -r /back_end/requirements.txt
 COPY ./products_service /back_end/products_service
 COPY ./security /back_end/security
 
-CMD ["uvicorn", "products_service.main:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["sh", "-c", "uvicorn products_service.main:app --host 0.0.0.0 --port $PORT"]
 

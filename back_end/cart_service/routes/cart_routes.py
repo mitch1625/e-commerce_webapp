@@ -9,7 +9,7 @@ from cart_service import models
 from typing import Annotated
 
 models.Base.metadata.create_all(bind=engine)
-router = APIRouter()
+router = APIRouter(prefix="/cart")
 
 def get_db():
     db = SessionLocal()
@@ -22,7 +22,6 @@ db_dependency = Annotated[Session, Depends(get_db)]
 
 def get_or_create_cart(db: db_dependency, 
                        user_id: str):
-    print("fetching cart")
     cart = db.query(Cart).filter(Cart.user_id == user_id).first()
     if not cart:
         cart = Cart(user_id=user_id)
@@ -31,7 +30,7 @@ def get_or_create_cart(db: db_dependency,
         db.refresh(cart)
     return cart
 
-@router.post('/cart/add/')
+@router.post('/add_item/')
 def add_to_cart(item: CartItemRequest, 
                 db: db_dependency, 
                 user_id: str = Depends(verify_token), 
@@ -62,7 +61,7 @@ def add_to_cart(item: CartItemRequest,
         status_code=status.HTTP_201_CREATED
     )
 
-@router.get('/cart/')
+@router.get('/get_cart/')
 def get_cart(db: db_dependency, 
              user_id: str = Depends(get_current_user)):
     cart = get_or_create_cart(db, user_id)
@@ -87,7 +86,7 @@ def get_cart(db: db_dependency,
         "items": items_response,
     }
 
-@router.put('/cart/remove/{item_id}')
+@router.put('/remove_item/{item_id}')
 def remove_from_cart(item_id: int, 
                      db: db_dependency, 
                      user_id: str = Depends(get_current_user)):

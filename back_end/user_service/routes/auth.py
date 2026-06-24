@@ -9,7 +9,7 @@ from user_service import models
 from user_service.database import engine
 
 models.Base.metadata.create_all(bind=engine)
-router = APIRouter()
+router = APIRouter(prefix="/users")
 
 def get_db():
   db = SessionLocal()
@@ -26,8 +26,6 @@ async def create_user(
   db: db_dependency
   ) -> dict:
 
-  print('Registering Account')
-  # print(auth.RegisterRequest)
   existing_user = db.query(models.User).filter(models.User.email == user.email).first()
   if existing_user:
     raise HTTPException(status_code=400, detail='Email already registered to account')
@@ -63,7 +61,6 @@ def login(user: auth.LoginRequest, db:db_dependency):
     raise HTTPException(status_code=401, detail='Invalid email or password')
 
   token, expires_in = jwt_utils.create_jwt(subject=str(user.email))
-  print(f'User {user.email} logged in')
   return {
     "user_id": user.email,
     "token": token,

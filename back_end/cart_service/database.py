@@ -8,7 +8,7 @@ load_dotenv()
 
 USERNAME = os.getenv('DB_USER')
 PASSWORD = os.getenv('DB_PASSWORD')
-URL_DATABASE = f'postgresql+psycopg://{USERNAME}:{PASSWORD}@cart_db:5432/cart_db'
+URL_DATABASE = os.getenv('DB_URL')
  
 
 engine = create_engine(URL_DATABASE)
