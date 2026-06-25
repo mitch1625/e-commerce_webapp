@@ -1,15 +1,17 @@
 import axios from 'axios';
+const USER_API = process.env.REACT_APP_USER_SERVICE 
+const PRODUCTS_API = process.env.REACT_APP_PRODCUTS_SERVICE
+const CART_API = process.env.REACT_APP_CART_SERVICE
 
 export const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/users"
+  baseURL: `${USER_API}/users`
 })
-
 export const productApi = axios.create({
-  baseURL: "http://127.0.0.1:8001/products"
+  baseURL: `${PRODUCTS_API}/products`
 })
 
 export const cartApi = axios.create({
-  baseURL: "http://127.0.0.1:8002/cart"
+  baseURL: `${CART_API}:8002/cart`
 })
 
 export const convertApi = axios.create({
