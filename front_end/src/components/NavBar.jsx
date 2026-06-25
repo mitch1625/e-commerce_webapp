@@ -9,15 +9,14 @@ function NavBar( {user}) {
 
   const handleLogout = async() => {
     try {
-      await api.delete("/logout/")
-      localStorage.removeItem('token');
+      localStorage.clear();
       setUser(null)
       setAuthToken(null)
-      navigate('/')
+      navigate("/");
+      window.location.reload();
     } catch (err) {
       console.error("Logout failed", err)
     }
-    navigate("/")
   }
 
  return (
@@ -29,7 +28,7 @@ function NavBar( {user}) {
      <Link to='/products'>Shop</Link>
      {user ?
      <>
-      <div onClick={handleLogout}>Logout</div>
+      <Link onClick={handleLogout} to="/">Logout</Link>
       <Link to='/cart'>Cart</Link>
      </>
      :
