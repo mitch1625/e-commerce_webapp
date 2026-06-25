@@ -15,10 +15,10 @@ function HomePage() {
     <div>
    <div className='banner-text'>Brewed to Perfection.<br/>
     Delivered to Your Door.</div> 
-    </div>
     <button id='banner-button' onClick={redirectClick}>
       Shop Now
     </button>
+    </div>
    <img id='home-banner' src={croppedBanner}/>
   </div>
   <FeaturedProductsComponent/>

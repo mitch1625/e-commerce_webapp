@@ -11,7 +11,7 @@ function CartPage() {
       let token = localStorage.getItem('token')
       if (token) {
         try {
-          let response = await cartApi.get('/cart/', {
+          let response = await cartApi.get('/get_cart/', {
             headers: {
               'Authorization' : `Bearer ${token}`,
               'Content-Type': 'application/json', 

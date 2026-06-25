@@ -2,70 +2,105 @@
 @tailwind components;
 @tailwind utilities;
 
-input {
-  font-size: 1.4rem;
-}
+/* =========================
+   GLOBAL
+========================= */
 
 * {
-    font-family: 'Kameron';
+  box-sizing: border-box;
+  font-family: "Kameron";
 }
 
+html {
+  font-size: 16px;
+}
+
+body,
 #body {
-  margin: 0px;
-  padding: 0px;
-  width: 100vw;
-  height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-a{
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+input {
+  font-size: 1.1rem;
+  width: 100%;
+  max-width: 500px;
+  padding: 0.75rem;
+}
+
+a {
   text-decoration: none;
   color: black;
 }
- 
-#nav-bar{
+
+/* =========================
+   NAVIGATION
+========================= */
+
+#nav-bar {
   padding: 3rem;
   font-size: 2rem;
   color: #000;
   border-bottom: 1px solid black;
 }
 
+/* =========================
+   HOME BANNER
+========================= */
+
 #banner-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   margin: 0;
+  position: relative;
 }
 
 .banner-text {
   position: absolute;
-  height: auto;
   z-index: 1;
-  font-size: 4rem;
-  top:20%;
-  left: 15%
+  top: 20%;
+  left: 10%;
+  width: 80%;
+  font-size: clamp(1.5rem, 4vw, 4rem);
 }
 
 #banner-button {
   position: absolute;
-  top: 35%;
-  left:28%;
-  font-size: 3.5rem;
+  top: 55%;
+  left: 25%;
+  font-size: clamp(1rem, 3vw, 2rem);
 }
 
 #home-banner {
   position: relative;
-  max-width: 100%;
+  width: 100%;
   height: auto;
   grid-column: span 5;
   margin: 0;
   z-index: -1;
 }
 
-#featured-product-container, #all-product-container {
-  display:grid; 
-  grid-template-columns: repeat(3, 1fr);
+/* =========================
+   PRODUCT LISTINGS
+========================= */
+
+#featured-product-container,
+#all-product-container {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-#featured-items-header, #all-products-header {
+#featured-items-header,
+#all-products-header {
   padding-top: 1rem;
   padding-bottom: 1rem;
   font-size: 3rem;
@@ -73,8 +108,9 @@ a{
 }
 
 #ind-product-container {
-  display:grid;
-  grid-template-rows: 25vw repeat(2, 1fr)
+  display: grid;
+  grid-template-rows: auto auto auto;
+  padding: 1rem;
 }
 
 #ind-product-flavors {
@@ -83,12 +119,9 @@ a{
 }
 
 #ind-product-img {
-  height: 100%;
   width: 100%;
+  max-height: 350px;
   object-fit: contain;
-  /* grid-column-start: 1;
-  grid-column-end: 4; */
-  /* grid-row: span 1; */
   justify-self: center;
   margin-bottom: -10px;
 }
@@ -96,33 +129,40 @@ a{
 #ind-product-details {
   text-align: center;
   margin: 0;
-  font-size: 2.25rem;
-  /* line-height: 2.5rem; */
+  font-size: 2rem;
 }
 
-#featured-button-container{
+#featured-button-container {
   display: flex;
   justify-content: center;
   padding: 1rem;
-  
-  padding-bottom: .5em;
+  padding-bottom: 0.5rem;
 }
+
+/* =========================
+   BUTTONS
+========================= */
 
 button {
   border: 1px solid black;
   border-radius: 2px;
-  /* padding: .3em; */
   background-color: transparent;
   font-size: 1.5rem;
   margin: 10px;
   margin-top: 0;
+  padding: 0.5rem 1rem;
 }
 
 button:hover {
   cursor: pointer;
 }
 
-#login-page, #registration-page {
+/* =========================
+   LOGIN / REGISTER
+========================= */
+
+#login-page,
+#registration-page {
   padding-top: 4rem;
   display: flex;
   flex-direction: column;
@@ -132,6 +172,8 @@ button:hover {
 
 .login-register-container {
   padding: 3rem;
+  width: 100%;
+  max-width: 600px;
 }
 
 .login-register-header {
@@ -140,13 +182,13 @@ button:hover {
 }
 
 .login-register-subtext {
-  font-size: 2.25rem;
+  font-size: 2rem;
 }
 
 .form-labels {
   display: flex;
   flex-direction: column;
-  font-size: 1.8rem ;
+  font-size: 1.5rem;
   padding-bottom: 1.5rem;
 }
 
@@ -155,16 +197,20 @@ form {
 }
 
 #login-button {
-  width: 20%;
-  height: fit-content;
+  width: 100%;
+  max-width: 250px;
   border: 1px solid black;
   border-radius: 2px;
-  font-size: 2.25rem;
+  font-size: 2rem;
 }
 
 .login-register-redirect-text {
   font-size: 1.5rem;
 }
+
+/* =========================
+   FILTERS
+========================= */
 
 #filter-comp {
   padding: 2rem;
@@ -175,6 +221,16 @@ form {
   font-size: 2rem;
 }
 
+select {
+  font-size: 1.1rem;
+  margin: 1rem;
+  padding: 0.5rem;
+}
+
+/* =========================
+   ALL PRODUCTS PAGE
+========================= */
+
 #all-products-text-container {
   padding-left: 6rem;
   padding-right: 6rem;
@@ -184,28 +240,28 @@ form {
 }
 
 #all-products-desc {
-	font-size: 1.25rem;
+  font-size: 1.25rem;
 }
 
+/* =========================
+   PRODUCT DETAILS
+========================= */
 
 #product-details-container {
-  padding-left: 3rem;
-  padding-right: 3rem;
-  padding-top: 2rem;
+  padding: 2rem;
   display: grid;
-  grid-template-columns: 1fr 2fr 2fr 1fr;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
 }
 
-#product-details-product{
-  grid-column-start: 2;
-  grid-column-end: 3;
+#product-details-product,
+#product-details-text {
+  grid-column: auto;
 }
 
 #product-details-text {
   display: flex;
   flex-direction: column;
-  grid-column-start: 3;
-  grid-column-end: 4;
   font-size: 2rem;
 }
 
@@ -214,43 +270,170 @@ form {
 }
 
 #product-details-button-container {
-  grid-column-start: 3;
   display: flex;
-
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 #quantity-input {
-  width: 20%;
+  width: 100px;
   text-align: center;
 }
 
-/* #cart-container {
-  display:grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-} */
+/* =========================
+   CART
+========================= */
 
 .cart-item {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  padding: 2.5rem;
-  font-size: 2.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: center;
+  padding: 2rem;
+  font-size: clamp(1rem, 2vw, 2rem);
 }
 
 .cart-product-quantity {
-  grid-column-start: 2;
   text-align: center;
-  width: 25%;
+  width: 100%;
 }
 
 .cart-quantity-button {
-  width: 25%;
+  width: 100%;
 }
 
-/* .currency-select {
-  font-size: 2.5rem;
-} */
+/* =========================
+   TABLETS
+========================= */
 
-select {
-  font-size: 1.3rem;
-  margin: 1rem;
+@media (max-width: 1024px) {
+  #nav-bar {
+    padding: 2rem;
+    font-size: 1.5rem;
+  }
+
+  #filter-comp,
+  #all-products-text-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  #product-details-container {
+    grid-template-columns: 1fr;
+  }
+
+  .login-register-header {
+    font-size: 3rem;
+  }
+
+  .login-register-subtext {
+    font-size: 1.5rem;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  #nav-bar {
+    padding: 1rem;
+    font-size: 1.25rem;
+  }
+
+  .banner-text {
+    top: 10%;
+    left: 5%;
+    width: 90%;
+  }
+
+  #banner-button {
+    top: 50%;
+    left: 5%;
+  }
+
+  #featured-items-header,
+  #all-products-header {
+    font-size: 2rem;
+    text-align: center;
+    line-height: normal;
+  }
+
+  #featured-product-container,
+  #all-product-container {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  #filter-comp {
+    padding: 1rem;
+  }
+
+  #all-products-text-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  #product-details-container {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  #product-details-text {
+    font-size: 1.25rem;
+  }
+
+  #product-details-size-price {
+    font-size: 1.75rem;
+  }
+
+  .cart-item {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .cart-product-quantity,
+  .cart-quantity-button {
+    width: 100%;
+  }
+
+  .login-register-container {
+    padding: 1.5rem;
+  }
+
+  .login-register-header {
+    font-size: 2.5rem;
+  }
+
+  .login-register-subtext {
+    font-size: 1.25rem;
+  }
+
+  .form-labels {
+    font-size: 1.2rem;
+  }
+
+  #login-button {
+    font-size: 1.5rem;
+  }
+
+  button {
+    font-size: 1rem;
+  }
+}
+
+/* =========================
+   LARGE DESKTOPS
+========================= */
+
+@media (min-width: 1440px) {
+  html {
+    font-size: 18px;
+  }
+
+  #featured-product-container,
+  #all-product-container {
+    gap: 2rem;
+  }
 }
