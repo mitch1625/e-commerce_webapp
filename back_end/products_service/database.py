@@ -8,7 +8,7 @@ load_dotenv()
 
 USERNAME = os.getenv('DB_USER')
 PASSWORD = os.getenv('DB_PASSWORD')
-URL_DATABASE = os.getenv('DB_URL')
+URL_DATABASE = os.getenv('PRODUCTS_DB_URL')
  
 
 engine = create_engine(URL_DATABASE)
