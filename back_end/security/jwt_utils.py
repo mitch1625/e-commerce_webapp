@@ -9,8 +9,6 @@ def create_jwt(subject: str, expires_in_minutes: int = 60):
     settings = get_settings()
 
     expire = datetime.now(timezone.utc) + timedelta(minutes=expires_in_minutes)
-    print('ENCODE:', settings.jwt_secret)
-
     payload = {
         "sub": subject,
         "exp": expire

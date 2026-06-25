@@ -11,7 +11,6 @@ class Settings(BaseSettings):
     jwt_secret: str = Field(alias="JWT_KEY")
     jwt_algorithm: str = Field(alias="ALGORITHM")
     jwt_expires_minutes: int = Field(alias="TOKEN_EXPIRE")
-    db_name: str = Field(alias="DB_NAME")
 
 @lru_cache
 def get_settings() -> Settings:

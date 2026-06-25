@@ -1,15 +1,15 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/"
+  baseURL: "http://127.0.0.1:8000/users"
 })
 
 export const productApi = axios.create({
-  baseURL: "http://127.0.0.1:8001/"
+  baseURL: "http://127.0.0.1:8001/products"
 })
 
 export const cartApi = axios.create({
-  baseURL: "http://127.0.0.1:8002/"
+  baseURL: "http://127.0.0.1:8002/cart"
 })
 
 export const convertApi = axios.create({
