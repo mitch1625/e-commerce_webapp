@@ -11,7 +11,10 @@ def create_app() -> FastAPI:
     app.include_router(auth_router)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"], 
+        allow_origins=[
+        "https://e-commerce-webapp-3lmc.vercel.app/",
+        "http://localhost:5173",
+        ], 
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
