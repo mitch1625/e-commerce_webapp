@@ -10,7 +10,7 @@ function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
-  const [user, setUser] = useContext(UserContext)
+  const {user, setUser} = useContext(UserContext)
 
   const login = async(e) => {
     e.preventDefault()
@@ -25,7 +25,7 @@ function LoginPage() {
       localStorage.setItem("token", token)
       setAuthToken(token)
 
-    setUser(response.data.user_id)
+      setUser(response.data.user_id)
       navigate('/')
     } catch (err) {
         console.log(err.response.data)

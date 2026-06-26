@@ -1,9 +1,10 @@
 import IndividualProductComponent from "../components/IndividualProductComponent"
 import coffeeImg from "../assets/coffeeBag.png"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { productApi, cartApi, convertApi } from "../utilities"
-
+import UserContext from "../contexts/UserContext";
+import { useContext } from "react";
 
 function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1)
@@ -12,6 +13,8 @@ function ProductDetailPage() {
   const [loading, setLoading] = useState(true)
   const [price, setPrice] = useState('$14')
   const [selectedCurrency, setSelectedCurrency] = useState("USD")
+  const {user}= useContext(UserContext)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const getProduct = async(e) => {
@@ -27,33 +30,33 @@ function ProductDetailPage() {
     getProduct()
   }, [productId])
 
-  useEffect(() => {
-    const convertCurrency = async() => {
-      try {
-        const response = await convertApi.post('/convert', {
-          amount: product.price,
-          from: "USD",
-          to_currency: selectedCurrency,
-        })
-        const converted = response.data.converted_amount
-        const symbolMap = {
-          USD: "$",
-          EUR: "€",
-          JPY: "¥",
-          GBP: "£"
-        }
+  // useEffect(() => {
+  //   const convertCurrency = async() => {
+  //     try {
+  //       const response = await convertApi.post('/convert', {
+  //         amount: product.price,
+  //         from: "USD",
+  //         to_currency: selectedCurrency,
+  //       })
+  //       const converted = response.data.converted_amount
+  //       const symbolMap = {
+  //         USD: "$",
+  //         EUR: "€",
+  //         JPY: "¥",
+  //         GBP: "£"
+  //       }
         
-        setPrice(`${symbolMap[selectedCurrency]}${converted}`)
-      } catch (err) {
-        console.log(err.response.data)
-      }
-    }
+  //       setPrice(`${symbolMap[selectedCurrency]}${converted}`)
+  //     } catch (err) {
+  //       console.log(err.response.data)
+  //     }
+  //   }
 
-    convertCurrency()
-  }, [selectedCurrency])
+  //   convertCurrency()
+  // }, [selectedCurrency])
 
   const addItemToCart = async(e) => {
-      e.preventDefault();
+    e.preventDefault();
     let data = {
       product_id : product.id,
       quantity : quantity,
@@ -63,14 +66,13 @@ function ProductDetailPage() {
       let token = localStorage.getItem('token')
       if (token) {
         try {
-          console.log(data)
-          let response = await cartApi.post('/cart/add/', data, {
+          let response = await cartApi.post('/add_item/', data, {
             headers: {
               'Authorization' : `Bearer ${token}`,
               'Content-Type': 'application/json', 
             }
           })
-          console.log(response.status)
+          // console.log(response.status)
           if (response.status === 201) {
             alert('Item added to cart')
           }
@@ -111,12 +113,12 @@ function ProductDetailPage() {
       <div id='product-details-size-price'>
         Size: 12 oz bottle<br/>
         {price}
-        <select id='currency-select' name='currency' value={selectedCurrency} onChange={(e) => setSelectedCurrency(e.target.value)}>
+        {/* <select id='currency-select' name='currency' value={selectedCurrency} onChange={(e) => setSelectedCurrency(e.target.value)}>
           <option className="currency">USD</option>
           <option className="currency">EUR</option>
           <option className="currency">JPY</option>
           <option className="currency">GBP</option>
-        </select>
+        </select> */}
       </div>
     </div>
     <div id='product-details-button-container'>
@@ -125,7 +127,12 @@ function ProductDetailPage() {
         <input id='quantity-input' type='number' value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}></input>
         <button onClick={() => increaseQuantity()}>+</button>
       </div>
-      <button type="button" onClick={(e) => addItemToCart(e)} >Add to Cart</button>
+      <button type="button" onClick={(e) => 
+      {user ?  addItemToCart(e)
+          : 
+      navigate('/login')}
+      }
+     >Add to Cart</button>
     </div>
     <div>
     </div>

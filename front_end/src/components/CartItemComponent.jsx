@@ -10,7 +10,7 @@ const CartItemComponent = ({product}) => {
     let token = localStorage.getItem('token')
     if (token) {
       try {
-        let response = await cartApi.put(`/cart/remove/${product.id}`,null, {
+        let response = await cartApi.put(`/remove_item/${product.id}`,null, {
             headers: {
               'Authorization' : `Bearer ${token}`,
               'Content-Type': 'application/json', 
@@ -43,7 +43,7 @@ const CartItemComponent = ({product}) => {
       <div>
           <div className='cart-item'>
             <div id="cart-product-name">{product.name}</div>
-            <div>
+            <div className="cart-quantity-box">
               <button className='cart-quantity-button' onClick={decreaseQuantity}>-</button>
               <input 
                 className='cart-product-quantity' 

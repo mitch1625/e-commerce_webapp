@@ -18,7 +18,6 @@ function CartPage() {
             }
           }
           )
-          console.log(response.data)
           setCartItems(response.data)
           setLoading(false)
         } catch (err) {
@@ -28,7 +27,6 @@ function CartPage() {
       }
     }
     getCartItems()
-    console.log(cartItems)
   }, [loading])
   
    if (loading) {
@@ -40,12 +38,16 @@ function CartPage() {
   <div id='cart-container'>
     <div id='cart-item-container'>
       <div>
-        {cartItems.items.map((item, index) => (
-          <CartItemComponent 
-          product={item}
-          key={index}
-          />
-        ))}
+        {cartItems ? 
+          (<p>Cart is empty</p>)
+           : 
+          (cartItems.items.map((item, index) => (
+            <CartItemComponent 
+            product={item}
+            key={index}
+            />
+          )))
+        } 
 
       </div>
     </div>

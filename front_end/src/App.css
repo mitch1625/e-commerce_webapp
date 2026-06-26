@@ -271,7 +271,7 @@ select {
 
 #product-details-button-container {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
 }
 
@@ -291,6 +291,7 @@ select {
   align-items: center;
   padding: 2rem;
   font-size: clamp(1rem, 2vw, 2rem);
+  display: flex;
 }
 
 .cart-product-quantity {
@@ -302,9 +303,11 @@ select {
   width: 100%;
 }
 
-/* =========================
-   TABLETS
-========================= */
+.cart-quantity-box{
+  display: flex;
+  flex-direction: row;
+}
+
 
 @media (max-width: 1024px) {
   #nav-bar {
