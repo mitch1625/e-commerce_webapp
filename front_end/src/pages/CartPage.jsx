@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import CartItemComponent from '../components/CartItemComponent'
 
 function CartPage() {
-  const [cartItems, setCartItems] = useState([]) 
+  const [cartItems, setCartItems] = useState(null) 
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -27,10 +27,10 @@ function CartPage() {
       }
     }
     getCartItems()
-  }, [loading])
+  }, [])
   
    if (loading) {
-    return <div></div>
+    return <p>Loading...</p>
   }
 
  return (
@@ -38,7 +38,7 @@ function CartPage() {
   <div id='cart-container'>
     <div id='cart-item-container'>
       <div>
-        {!cartItems ? 
+        {cartItems.items.length == 0 ? 
           (<p>Cart is empty</p>)
            : 
           (cartItems.items.map((item, index) => (
