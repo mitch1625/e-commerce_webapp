@@ -38,7 +38,7 @@ function CartPage() {
   <div id='cart-container'>
     <div id='cart-item-container'>
       <div>
-        {cartItems ? 
+        {!cartItems ? 
           (<p>Cart is empty</p>)
            : 
           (cartItems.items.map((item, index) => (
