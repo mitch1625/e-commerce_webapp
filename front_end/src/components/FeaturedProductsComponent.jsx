@@ -18,12 +18,12 @@ function FeaturedProductsComponent () {
   <>
    <div id='featured-items-header'>Discover Our Best-Selling Coffees</div>
    <div id='featured-product-container'>
-    {/* {featuredProducts.map((product,index) => (
+    {featuredProducts.map((product,index) => (
       <IndividualProductComponent
         key={index}
         product={product}
         />
-    ))} */}
+    ))}
    </div>
   </>
  )
