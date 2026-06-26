@@ -23,7 +23,7 @@ async def get_all_products(db:db_dependency):
 
 @router.get('/featured_products/', status_code=status.HTTP_200_OK)
 async def get_featured_products(db:db_dependency):
-  featured_products = db.query(models.Products).limit(3).all()
+  featured_products = db.query(models.Products).filter(models.Products.is_featured == True).limit(3)
   return featured_products
 
 @router.get('/product/{id}')

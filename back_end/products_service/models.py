@@ -1,5 +1,4 @@
-from sqlalchemy import Column, ForeignKey, String, Integer, JSON
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, ForeignKey, String, Integer, JSON, Boolean
 from sqlalchemy.orm import DeclarativeBase
 
 class Base(DeclarativeBase):
@@ -13,3 +12,4 @@ class Products(Base):
   description = Column(String(), nullable=False)
   size = Column(String(), nullable=False)
   price = Column(Integer, nullable=False)
+  is_featured = Column(Boolean, nullable=False)
