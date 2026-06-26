@@ -15,14 +15,18 @@ import { api } from './utilities'
 function App() {
   const [user, setUser] = useState(null)
 
-  const checkUser = async() => {
+  // Checks token to persist state through refresh
+  const checkUser = async() => { 
     let token = localStorage.getItem('token')
     if (token){
-      console.log(token)
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`
       let response = await api.get('/userinfo/')
-      console.log(response)
-      setUser(response.data.email)
+      if (response['status'] == 200){
+        setUser(response.data.email)
+      }
+      else {
+        localStorage.clear()
+      }
     }
   }
 
@@ -33,7 +37,7 @@ function App() {
 
   return (
     <>
-      <UserContext.Provider value={[user, setUser]}>
+      <UserContext.Provider value={{user, setUser}}>
         <Router>
           <NavBar user={user}/>
           <Routes>

@@ -1,10 +1,12 @@
 import coffeeImg from "../assets/coffeeBag.png"
 import { useNavigate } from "react-router-dom"
 import { cartApi } from "../utilities"
+import UserContext from "../contexts/UserContext";
+import { useContext } from "react";
 
 function IndividualProductComponent({product}) {
   const navigate = useNavigate()
-  
+  const {user}= useContext(UserContext)
   const detailsPageRedirect = () => {
     navigate(`/products/${product.id}`)
   }
@@ -19,14 +21,12 @@ function IndividualProductComponent({product}) {
     let token = localStorage.getItem('token')
     if (token) {
       try {
-        console.log(data)
-        let response = await cartApi.post('/cart/add/', data, {
+        let response = await cartApi.post('/add_item/', data, {
           headers: {
             'Authorization' : `Bearer ${token}`,
             'Content-Type': 'application/json', 
           }
         })
-        console.log(response.status)
         if (response.status === 201) {
           alert('Item added to cart')
         }
@@ -45,7 +45,12 @@ function IndividualProductComponent({product}) {
       <div id='ind-product-flavors'>{product.flavors[0]} • {product.flavors[1]} • {product.flavors[2]}</div>
       </div>
       <div id='featured-button-container'>
-        <button type='button' onClick={(e)=> addItemToCart(e)}>Quick Add</button>
+        <button type='button' onClick={(e)=> 
+        {user ?  addItemToCart(e)
+          : 
+          navigate('/login')}
+        }
+        >Quick Add</button>
         <button type='button' onClick={detailsPageRedirect}>Details</button>
       </div>
       </div>

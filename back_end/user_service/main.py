@@ -12,7 +12,7 @@ def create_app() -> FastAPI:
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[
-        "https://e-commerce-webapp-3lmc.vercel.app/",
+        "https://e-commerce-webapp-3lmc.vercel.app",
         "http://localhost:5173",
         ], 
         allow_credentials=True,
