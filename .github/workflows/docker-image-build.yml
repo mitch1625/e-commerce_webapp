@@ -32,7 +32,7 @@ jobs:
       - name: Build user-service image
         uses: docker/build-push-action@v6
         with:
-          context: ./back_end/user_service
+          context: ./back_end/
           file: ./back_end/user_service/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/users_service:latest
