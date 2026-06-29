@@ -49,3 +49,12 @@ jobs:
           file: ./back_end/cart_service/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/cart_service:latest
+  deploy:
+    runs-on: ubuntu-latest
+    container: ghcr.io/mitch1625/user_service:latest
+    env:
+      SVC_ID: 7afa255c-eb97-4e54-87f5-b008a9d2f888
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - run: railway up --service=${{ env.SVC_ID }}
