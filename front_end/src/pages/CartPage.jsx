@@ -6,26 +6,26 @@ function CartPage() {
   const [cartItems, setCartItems] = useState(null) 
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const getCartItems = async() => {
-      let token = localStorage.getItem('token')
-      if (token) {
-        try {
-          let response = await cartApi.get('/get_cart/', {
-            headers: {
-              'Authorization' : `Bearer ${token}`,
-              'Content-Type': 'application/json', 
-            }
+  const getCartItems = async() => {
+    let token = localStorage.getItem('token')
+    if (token) {
+      try {
+        let response = await cartApi.get('/get_cart/', {
+          headers: {
+            'Authorization' : `Bearer ${token}`,
+            'Content-Type': 'application/json', 
           }
-          )
-          setCartItems(response.data)
-          setLoading(false)
-        } catch (err) {
-          console.log(err.response)
-          setLoading(false)
         }
+        )
+        setCartItems(response.data)
+        setLoading(false)
+      } catch (err) {
+        console.log(err.response)
+        setLoading(false)
       }
     }
+  }
+  useEffect(() => {
     getCartItems()
   }, [])
   
