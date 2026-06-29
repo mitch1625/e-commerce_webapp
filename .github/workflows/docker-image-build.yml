@@ -26,13 +26,26 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GH_TOKEN }}
 
-      - name: Lowercase the repo name and username
-        run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
-
-      - name: Build user-service image
+      - name: Build user_service image
         uses: docker/build-push-action@v6
         with:
           context: ./back_end/
           file: ./back_end/user_service/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/users_service:latest
+          tags: ghcr.io/${{ github.repository_owner }}/user_service:latest
+
+      - name: Build products_service image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./back_end/
+          file: ./back_end/products_service/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/products_service:latest
+
+      - name: Build cart_service image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./back_end/
+          file: ./back_end/cart_service/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/cart_service:latest
