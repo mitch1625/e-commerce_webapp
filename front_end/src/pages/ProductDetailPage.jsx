@@ -12,8 +12,8 @@ function ProductDetailPage() {
   const [product, setProduct] = useState(null)
   const {productId} = useParams()
   const [loading, setLoading] = useState(true)
-  const [price, setPrice] = useState('$14')
-  const [selectedCurrency, setSelectedCurrency] = useState("USD")
+  // const [price, setPrice] = useState()
+  // const [selectedCurrency, setSelectedCurrency] = useState("USD")
   const {user}= useContext(UserContext)
   const navigate = useNavigate()
 
@@ -125,7 +125,7 @@ function ProductDetailPage() {
       <p>{product.description}</p>
       <div id='product-details-size-price'>
         Size: 12 oz bottle<br/>
-        {price}
+        ${product.price}
         {/* <select id='currency-select' name='currency' value={selectedCurrency} onChange={(e) => setSelectedCurrency(e.target.value)}>
           <option className="currency">USD</option>
           <option className="currency">EUR</option>

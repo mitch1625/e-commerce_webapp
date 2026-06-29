@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, String, Integer, JSON, Boolean
+from sqlalchemy import Column, ForeignKey, String, Integer, JSON, Boolean, Float
 from sqlalchemy.orm import DeclarativeBase
 
 class Base(DeclarativeBase):
@@ -11,5 +11,5 @@ class Products(Base):
   flavors = Column(JSON, nullable=False) #parent_one = Parent(list_of_items=['item1', 'item2'])
   description = Column(String(), nullable=False)
   size = Column(String(), nullable=False)
-  price = Column(Integer, nullable=False)
+  price = Column(Float, nullable=False)
   is_featured = Column(Boolean, nullable=False)
