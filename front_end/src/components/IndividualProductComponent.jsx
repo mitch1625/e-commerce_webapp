@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { cartApi } from "../utilities"
 import UserContext from "../contexts/UserContext";
 import { useContext } from "react";
+import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 function IndividualProductComponent({product}) {
   const navigate = useNavigate()
@@ -10,6 +11,7 @@ function IndividualProductComponent({product}) {
   const detailsPageRedirect = () => {
     navigate(`/products/${product.id}`)
   }
+
   const addItemToCart = async(e) => {
     e.preventDefault();
     let data = {
@@ -28,7 +30,17 @@ function IndividualProductComponent({product}) {
           }
         })
         if (response.status === 201) {
-          alert('Item added to cart')
+          toast.success('Item added to cart', {
+          position: "bottom-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Zoom,
+        });
         }
       } catch (err) {
         console.log(err.response.data)
@@ -45,13 +57,28 @@ function IndividualProductComponent({product}) {
       <div id='ind-product-flavors'>{product.flavors[0]} • {product.flavors[1]} • {product.flavors[2]}</div>
       </div>
       <div id='featured-button-container'>
-        <button type='button' onClick={(e)=> 
-        {user ?  addItemToCart(e)
-          : 
-          navigate('/login')}
-        }
-        >Quick Add</button>
+        <button 
+          type='button' 
+          onClick={(e)=> {
+            user ?  addItemToCart(e) : navigate('/login')
+          }}
+        >
+          Quick Add
+        </button>
         <button type='button' onClick={detailsPageRedirect}>Details</button>
+        <ToastContainer
+        position="bottom-center"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Zoom}
+        />
       </div>
       </div>
     </>

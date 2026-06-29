@@ -1,7 +1,6 @@
 import IndividualProductComponent from "../components/IndividualProductComponent"
 import SortByComponent from "../components/SortByComponent"
 import { useEffect, useState } from "react"
-import { allProducts } from "../productData"
 import {productApi} from '../utilities'
 
 

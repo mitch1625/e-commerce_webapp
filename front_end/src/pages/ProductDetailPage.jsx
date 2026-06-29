@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { productApi, cartApi, convertApi } from "../utilities"
 import UserContext from "../contexts/UserContext";
 import { useContext } from "react";
+import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1)
@@ -16,8 +17,7 @@ function ProductDetailPage() {
   const {user}= useContext(UserContext)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const getProduct = async(e) => {
+  const getProduct = async() => {
       try {
         const response = await productApi.get(`/product/${productId}`)
         setProduct(response.data)
@@ -27,8 +27,11 @@ function ProductDetailPage() {
         setLoading(false)
       }
     } 
-    getProduct()
-  }, [productId])
+
+  useEffect(() => {
+    if (!productId) return;
+    getProduct();
+  }, [productId]);
 
   // useEffect(() => {
   //   const convertCurrency = async() => {
@@ -74,7 +77,17 @@ function ProductDetailPage() {
           })
           // console.log(response.status)
           if (response.status === 201) {
-            alert('Item added to cart')
+            toast.success('Item added to cart', {
+            position: "bottom-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Zoom,
+            });
           }
         } catch (err) {
           console.log(err.response.data)
@@ -127,12 +140,25 @@ function ProductDetailPage() {
         <input id='quantity-input' type='number' value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}></input>
         <button onClick={() => increaseQuantity()}>+</button>
       </div>
-      <button type="button" onClick={(e) => 
-      {user ?  addItemToCart(e)
-          : 
-      navigate('/login')}
-      }
-     >Add to Cart</button>
+      <button type="button" onClick={(e) => {
+        user ?  addItemToCart(e) : navigate('/login')}
+        }
+      >
+        Add to Cart
+      </button>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Zoom}
+      />
     </div>
     <div>
     </div>
