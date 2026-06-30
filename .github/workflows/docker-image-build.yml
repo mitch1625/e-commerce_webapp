@@ -60,8 +60,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      # - name: Install Railway CLI
-      #   run: npm install -g @railway/cli
-  
       - name: Deploy to Railway
-        run: railway up --service=${{ env.SVC_ID }}
+        run: |
+          cd back_end
+          railway up --service=${{ env.SVC_ID }}
