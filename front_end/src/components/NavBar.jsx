@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import UserContext from "../contexts/UserContext"
-import { api, setAuthToken } from "../utilities"
+import { setAuthToken } from "../utilities"
 
 function NavBar( {user}) {
   const navigate = useNavigate()
