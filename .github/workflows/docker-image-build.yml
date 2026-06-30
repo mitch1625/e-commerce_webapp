@@ -32,7 +32,10 @@ jobs:
           context: ./back_end/
           file: ./back_end/user_service/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/user_service:latest
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/user_service:latest
+            ghcr.io/${{ github.repository_owner }}/${{ github.sha }}
+
 
       - name: Build products_service image
         uses: docker/build-push-action@v6
@@ -40,7 +43,9 @@ jobs:
           context: ./back_end/
           file: ./back_end/products_service/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/products_service:latest
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/products_service:latest
+            ghcr.io/${{ github.repository_owner }}/${{ github.sha }}
 
       - name: Build cart_service image
         uses: docker/build-push-action@v6
@@ -48,7 +53,9 @@ jobs:
           context: ./back_end/
           file: ./back_end/cart_service/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/cart_service:latest
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/cart_service:latest
+            ghcr.io/${{ github.repository_owner }}/${{ github.sha }}
           
   deploy:
     needs: build
@@ -60,7 +67,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Deploy to Railway
-        run: |
-          cd back_end
-          railway up --service=${{ env.SVC_ID }}
+      - name: Redeploy Railway Service
+        run: 
+          railway redeploy --service=${{ env.SVC_ID }} --yes
