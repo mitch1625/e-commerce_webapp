@@ -3,6 +3,8 @@ name: e-commerce-webapp
 services:
 
   dev:
+    env_file:
+      - ./front_end/.env.dev
     build:
       context: ./front_end
       dockerfile: Dockerfile

@@ -10,7 +10,7 @@ function RegistrationPage() {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const navigate = useNavigate()
-  const [user, setUser] = useContext(UserContext)
+  const {setUser} = useContext(UserContext)
   
   const createUser = async(e) => {
     e.preventDefault()

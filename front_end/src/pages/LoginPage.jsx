@@ -1,7 +1,6 @@
 import { useContext, useState } from "react"
 import ButtonComponent from "../components/ButtonComponent"
 import { useNavigate } from "react-router-dom"
-import { useOutletContext } from "react-router-dom";
 import { api, setAuthToken } from "../utilities";
 import { Link } from "react-router-dom"
 import UserContext from "../contexts/UserContext";
@@ -10,7 +9,7 @@ function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
-  const {user, setUser} = useContext(UserContext)
+  const {setUser} = useContext(UserContext)
 
   const login = async(e) => {
     e.preventDefault()
@@ -19,7 +18,6 @@ function LoginPage() {
         email:email,
         password:password
       })
-
       const token = response.data.token
 
       localStorage.setItem("token", token)
@@ -28,7 +26,7 @@ function LoginPage() {
       setUser(response.data.user_id)
       navigate('/')
     } catch (err) {
-        console.log(err.response.data)
+        console.log(err.response)
       }
   }
 
