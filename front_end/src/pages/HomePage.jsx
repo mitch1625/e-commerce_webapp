@@ -1,4 +1,3 @@
-import croppedBanner from "../assets/cropped-banner.png"
 import FeaturedProductsComponent from '../components/FeaturedProductsComponent'
 import { useNavigate } from 'react-router-dom';
 
@@ -19,7 +18,11 @@ function HomePage() {
       Shop Now
     </button>
     </div>
-   <img id='home-banner' src={croppedBanner}/>
+   <img 
+      id='home-banner' 
+      src="https://d3pllegt6tci1b.cloudfront.net/cropped-banner.png"
+      alt="coffee banner image"
+    />
   </div>
   <FeaturedProductsComponent/>
   </>
