@@ -1,4 +1,3 @@
-import coffeeImg from "../assets/coffeeBag.png"
 import { useNavigate } from "react-router-dom"
 import { cartApi } from "../utilities"
 import UserContext from "../contexts/UserContext";
@@ -51,7 +50,7 @@ function IndividualProductComponent({product}) {
   return (
     <>
     <div id='ind-product-container'>
-      <img id='ind-product-img' src={coffeeImg}/>
+      <img id='ind-product-img' src={product.img_url}/>
       <div>
       <h3 id="ind-product-details">{product.name}</h3>
       <div id='ind-product-flavors'>{product.flavors[0]} • {product.flavors[1]} • {product.flavors[2]}</div>
