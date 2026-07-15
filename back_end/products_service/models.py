@@ -13,3 +13,4 @@ class Products(Base):
   size = Column(String(), nullable=False)
   price = Column(Float, nullable=False)
   is_featured = Column(Boolean, nullable=False)
+  img_url = Column(String(), nullable=False)
