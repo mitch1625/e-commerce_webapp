@@ -5,7 +5,7 @@
 
 # C extensions
 *.so
-
+.sql
 # Distribution / packaging
 .Python
 build/
@@ -121,6 +121,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env.dev
 .venv
 env/
 venv/

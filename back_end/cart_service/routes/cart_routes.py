@@ -1,6 +1,6 @@
 from fastapi import HTTPException, Depends, status, APIRouter
 from fastapi.responses import JSONResponse
-from cart_service.schemas.schemas import CartItemRequest, CartItemResponse
+from cart_service.schemas.schemas import CartItemRequest, CartItemResponse, CartItemUpdate
 from sqlalchemy.orm import Session
 from cart_service.models import Cart, CartItem
 from cart_service.database import engine, SessionLocal
@@ -94,3 +94,28 @@ def remove_from_cart(item_id: int,
         raise HTTPException(status_code=404, detail="Item not found in cart")
     db.delete(cart_item)
     db.commit() 
+
+@router.put('/update_cart/{item_id}')
+def update_cart_item(item_id: int,
+                     db: db_dependency,
+                     update_data: CartItemUpdate,
+                     user_id: str = Depends(get_current_user)):
+    cart = get_or_create_cart(db, user_id)
+    cart_item = db.query(CartItem).filter(CartItem.id == item_id, CartItem.cart_id == cart.id).first()
+    if not cart_item:
+        raise HTTPException(status_code=404, detail="Item not found in cart")
+
+    if update_data.quantity <= 0:
+        raise HTTPException(
+            status_code=400,
+            detail="Quantity must be greater than 0",
+        )
+    
+    cart_item.quantity = update_data.quantity
+    db.commit()
+    db.refresh(cart_item)
+
+    return JSONResponse(
+        content={"message": "Cart item updated"},
+        status_code=status.HTTP_204_NO_CONTENT
+    )
