@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from "react"
-import { data, Link, useOutletContext } from "react-router-dom"
+import { useState, useContext } from "react"
+import { Link  } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { api } from "../utilities"
 import UserContext from "../contexts/UserContext"
@@ -27,6 +27,7 @@ function RegistrationPage() {
         setUser(response.data.user_id)
         localStorage.setItem('token', response.data.token);
         api.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`
+        navigate('/')
         }
       } catch (err) {
         console.log(err.response.data)

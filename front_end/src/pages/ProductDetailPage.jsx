@@ -1,8 +1,7 @@
 import IndividualProductComponent from "../components/IndividualProductComponent"
-import coffeeImg from "../assets/coffeeBag.png"
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { productApi, cartApi, convertApi } from "../utilities"
+import { productApi, cartApi } from "../utilities"
 import UserContext from "../contexts/UserContext";
 import { useContext } from "react";
 import { ToastContainer, Zoom, toast } from 'react-toastify';

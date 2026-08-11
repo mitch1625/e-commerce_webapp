@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" shape-rendering="crispEdges">
+  <!-- Transparent background -->
+<!-- Handle outline -->
+  <path fill="#17120f" d="M181 91h32v7h10v9h7v55h-7v10h-10v7h-32z"/>
+  <path fill="#f4e7cf" d="M183 99h27v6h9v9h5v45h-5v9h-9v6h-27z"/>
+  <path fill="#17120f" d="M188 111h20v5h7v35h-7v6h-20z"/>
+  <path fill="#3a302b" d="M193 117h13v5h4v23h-4v6h-13z"/>
+
+  <!-- Mug body outline -->
+  <path fill="#17120f" d="M43 88h128v7h9v9h6v112h-7v12h-10v8H56v-6H46v-9h-7V104h4z"/>
+
+  <!-- Mug body -->
+  <path fill="#f4e7cf" d="M47 102h129v111h-7v9H58v-7h-9z"/>
+  <path fill="#fff8e9" d="M51 107h48v104H58v-7h-7z"/>
+  <path fill="#d8c7aa" d="M139 107h35v105h-8v9h-27z"/>
+  <path fill="#c4b39b" d="M159 108h15v104h-8v9h-7z"/>
+
+  <!-- Top rim -->
+  <path fill="#17120f" d="M42 82h11v-6h109v6h12v6h8v18h-8v8H47v-7h-9V88h4z"/>
+  <path fill="#fff8e9" d="M47 85h8v-5h105v5h10v6h6v12h-7v7H49v-6h-7V91h5z"/>
+  <path fill="#cbb99e" d="M54 91h103v5h12v7H49v-7h5z"/>
+
+  <!-- Coffee -->
+  <path fill="#3b1e12" d="M55 91h99v4h11v7H49v-6h6z"/>
+  <path fill="#24120c" d="M58 95h92v4h9v3H54v-4h4z"/>
+
+  <!-- Coffee crema highlights -->
+  <g fill="#b86d2d">
+    <rect x="61" y="90" width="9" height="4"/>
+    <rect x="77" y="89" width="7" height="4"/>
+    <rect x="94" y="91" width="8" height="4"/>
+    <rect x="111" y="89" width="10" height="4"/>
+    <rect x="130" y="91" width="7" height="4"/>
+    <rect x="145" y="90" width="8" height="4"/>
+  </g>
+  <g fill="#f1c78b">
+    <rect x="67" y="94" width="5" height="3"/>
+    <rect x="99" y="94" width="5" height="3"/>
+    <rect x="126" y="94" width="4" height="3"/>
+  </g>
+
+  <!-- Mug pixel highlights -->
+  <g fill="#ffffff">
+    <rect x="54" y="116" width="7" height="30"/>
+    <rect x="61" y="111" width="5" height="9"/>
+    <rect x="70" y="111" width="4" height="5"/>
+  </g>
+
+  <!-- Ground shadow -->
+  <path fill="#17120f" opacity=".22" d="M54 226h112v5H54z"/>
+</svg>

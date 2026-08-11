@@ -13,7 +13,7 @@ class CartItemResponse(CartItemBase):
     product_details: Optional[dict] = None
     quantity:int
     name:str
-    price:int
+    price:float
 
 class CartResponse(BaseModel):
     id: int
@@ -24,4 +24,4 @@ class CartItemRequest(BaseModel):
     product_id: int
     quantity: int
     name: str
-    price: int
+    price: float
