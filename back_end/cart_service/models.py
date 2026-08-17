@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
 
@@ -20,6 +20,6 @@ class CartItem(Base):
   product_id = Column(Integer, nullable=False)
   quantity = Column(Integer, nullable=False, default=1)
   name = Column(String, nullable=False)
-  price = Column(Integer, nullable=False)
+  price = Column(Float, nullable=False)
   
   cart = relationship("Cart", back_populates="items")
