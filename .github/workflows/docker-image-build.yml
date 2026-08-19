@@ -43,8 +43,7 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/user_service:latest
             ghcr.io/${{ github.repository_owner }}/${{ github.sha }}
-            ${{ vars.ECR_REPOSITORY }}/user_service:latest
-            ${{ vars.ECR_REPOSITORY }}/${{ github.sha }}:latest
+            ${{ vars.ECR_REPOSITORY }}/ecomm-user-service:latest
 
 
       - name: Build products_service image
